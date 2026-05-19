@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { Search, SlidersHorizontal, X } from "lucide-react";
-import { api } from "../api/http";
+import { apissss } from "../api/http";
 import ProductCard from "../components/ProductCard.jsx";
 import { demoCategories, demoProducts } from "../utils/demoData.js";
 
