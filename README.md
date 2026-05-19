@@ -1,4 +1,6 @@
-Pet Shop - awdawfafafwafwascascxzcscs version
+
+Pet Shop - main version
+
 
 Full-stack MVP з лабораторних робіт: веб-застосунок зоомагазину на React + Tailwind CSS, Node.js + Express, REST API та PostgreSQL.
 
