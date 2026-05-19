@@ -2,7 +2,7 @@
 
 Full-stack MVP з лабораторних робіт: веб-застосунок зоомагазину на React + Tailwind CSS, Node.js + Express, REST API та PostgreSQL.
 
-## Стек
+## Стекc
 
 - Frontend: React, Vite, Tailwind CSS, React Router, lucide-react.
 - Backend: Node.js, Express.js, PostgreSQL `pg`, JWT, bcrypt.
