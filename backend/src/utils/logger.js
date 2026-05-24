@@ -1,33 +1,30 @@
-const levels = {
-  info: "INFO",
-  warn: "WARN",
-  error: "ERROR"
-};
+const fs = require("fs");
+const path = require("path");
+const winston = require("winston");
 
-function write(level, message, meta = {}) {
-  const payload = {
-    timestamp: new Date().toISOString(),
-    level: levels[level],
-    message,
-    ...meta
-  };
+const logsDir = path.join(process.cwd(), "logs");
 
-  const line = JSON.stringify(payload);
-  if (level === "error") {
-    console.error(line);
-    return;
-  }
-
-  if (level === "warn") {
-    console.warn(line);
-    return;
-  }
-
-  console.log(line);
+if (!fs.existsSync(logsDir)) {
+  fs.mkdirSync(logsDir, { recursive: true });
 }
 
-module.exports = {
-  info: (message, meta) => write("info", message, meta),
-  warn: (message, meta) => write("warn", message, meta),
-  error: (message, meta) => write("error", message, meta)
-};
+const logger = winston.createLogger({
+  level: "info",
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.json()
+  ),
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({
+      filename: path.join(logsDir, "app.log"),
+      level: "info"
+    }),
+    new winston.transports.File({
+      filename: path.join(logsDir, "error.log"),
+      level: "error"
+    })
+  ]
+});
+
+module.exports = logger;
