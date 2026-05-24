@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useMemo, useState } from "react";
 import { api } from "../api/http";
+import { trackEvent } from "../utils/analytics";
 
 const AuthContext = createContext(null);
 
@@ -11,6 +12,7 @@ export function AuthProvider({ children }) {
     localStorage.setItem("token", data.token);
     localStorage.setItem("user", JSON.stringify(data.user));
     setUser(data.user);
+    trackEvent("login", { method: "email" });
   }
 
   async function register(form) {
@@ -18,12 +20,14 @@ export function AuthProvider({ children }) {
     localStorage.setItem("token", data.token);
     localStorage.setItem("user", JSON.stringify(data.user));
     setUser(data.user);
+    trackEvent("sign_up", { method: "email" });
   }
 
   function logout() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setUser(null);
+    trackEvent("logout");
   }
 
   const value = useMemo(() => ({ user, login, register, logout }), [user]);

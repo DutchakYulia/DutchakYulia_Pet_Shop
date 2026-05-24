@@ -9,10 +9,12 @@ import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Account from "./pages/Account.jsx";
 import Admin from "./pages/Admin.jsx";
+import RouteAnalytics from "./components/RouteAnalytics.jsx";
 
 export default function App() {
   return (
     <div className="min-h-screen bg-[#f7faf8] text-ink">
+      <RouteAnalytics />
       <Header />
       <main className="mx-auto max-w-7xl px-4 py-6">
         <Routes>

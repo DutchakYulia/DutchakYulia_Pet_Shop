@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useMemo, useState } from "react";
+import { trackEvent } from "../utils/analytics";
 
 const CartContext = createContext(null);
 
@@ -16,14 +17,21 @@ export function CartProvider({ children }) {
       ? items.map((item) => item.product.id === product.id ? { ...item, quantity: item.quantity + 1 } : item)
       : [...items, { product, quantity: 1 }];
     persist(next);
+    trackEvent("add_to_cart", {
+      item_id: product.id,
+      item_name: product.name,
+      value: Number(product.is_promo && product.promo_price ? product.promo_price : product.price)
+    });
   }
 
   function update(productId, quantity) {
     persist(items.map((item) => item.product.id === productId ? { ...item, quantity } : item).filter((item) => item.quantity > 0));
+    trackEvent("update_cart", { item_id: productId, quantity });
   }
 
   function clear() {
     persist([]);
+    trackEvent("clear_cart");
   }
 
   const total = items.reduce((sum, item) => {

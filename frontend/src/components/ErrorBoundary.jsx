@@ -1,4 +1,5 @@
 import React from "react";
+import { trackEvent } from "../utils/analytics";
 
 export default class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -8,6 +9,13 @@ export default class ErrorBoundary extends React.Component {
 
   static getDerivedStateFromError(error) {
     return { error };
+  }
+
+  componentDidCatch(error, info) {
+    trackEvent("ui_error", {
+      message: error.message,
+      component_stack: info.componentStack
+    });
   }
 
   render() {
